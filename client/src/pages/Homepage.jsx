@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import Item from '../components/Item';
 import DropWrapper from "../components/DropWrapper";
 import Col from '../components/Col';
-import { data, statuses } from '../data';
+import { getDayFromDate, getLastDayFromMonthAndYear } from '../utils';
+import { data, statuses, daysOfWeek } from '../data';
 
 const Homepage = () => {
     const [items, setItems] = useState(data);
 
-    const onDrop = (item, monitor, status) => {
+    const onDrop = (item, monitor, status, date) => {
         const mapping = statuses.find(si => si.status === status);
 
         setItems(prevState => {
             const newItems = prevState
                 .filter(i => i.id !== item.id)
-                .concat({ ...item, status, icon: mapping.icon });
+                .concat({ ...item, status, icon: mapping.icon, date });
             return [ ...newItems ];
         });
     };
@@ -27,23 +28,72 @@ const Homepage = () => {
         });
     };
 
+    // TODO: work with month and year
+    const month = 4;
+    const year = 2023;
+    const endDayOfMonth = getLastDayFromMonthAndYear(year, month);
+
+    const dropWrappers = [];
+
+    const dayWrapper = (day) => 
+        <div key={day} className={"col-wrapper"}>
+            <h2 className={"col-header"}>{day}</h2>
+            <DropWrapper>
+                <Col>
+                    {items
+                        .filter(i => getDayFromDate(i.date).getDay() === new Date(year, month, day))
+                        .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} />)
+                    }
+                </Col>
+            </DropWrapper>
+        </div>
+
+    const weekCalendar = (startDay, endDay) => {
+        const view = [];
+        for (let day = startDay; day < endDay; day++) {
+            view.push(<> { dayWrapper(day) } </>)
+        }
+        return view;
+    }
+
+    let prevDay = 0;
+    for (let day = 0; day < endDayOfMonth; day++) {
+        const date = new Date(year, month - 1, day);
+        const newRow = date.getDate() == endDayOfMonth || date.getDay() % 7 == 6;
+
+        if (newRow) {
+            dropWrappers.push(<div className={'row'}>{ weekCalendar(prevDay, day) }</div>);
+            // newRow ? 
+            //     <div className={'row'}>
+            //         { 
+            //         column(day)
+            //         }
+            //     </div> : 
+            //     column(day)
+            prevDay = day;
+        }
+    }
+
     return (
         <div className={'row'}>
-            {statuses.map(s => {
-                return (
-                    <div key={status} className={"col-wrapper"}>
-                        <h2 className={"col-header"}>{s.status.toUpperCase()}</h2>
-                        <DropWrapper onDrop={onDrop} status={s.status}>
-                            <Col>
-                                {items
-                                    .filter(i => i.status === s.status)
-                                    .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={s} />)
-                                }
-                            </Col>
-                        </DropWrapper>
-                    </div>
-                );
-            })}
+            {
+                dropWrappers
+            // daysOfWeek.map(d => {
+            //     return (
+                    // <div key={d.day} className={"col-wrapper"}>
+                    //     <h2 className={"col-header"}>{d.dayStr.toUpperCase()}</h2>
+                    //     <DropWrapper onDrop={onDrop} /*status={s.status}*/>
+                    //         <Col>
+                    //             {items
+                    //                 .filter(i => getDayFromDate(i.date).getDay() === d.day)
+                    //                 .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} />)
+                    //             }
+                    //         </Col>
+                    //     </DropWrapper>
+                    // </div>
+                // );
+            // })
+            }
         </div>
     );
 };
