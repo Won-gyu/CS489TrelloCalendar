@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Item from '../components/Item';
 import DropWrapper from "../components/DropWrapper";
-import Col from '../components/Col';
+import ColWrapper from '../components/Col';
 import { getDayFromDate, getLastDayFromMonthAndYear } from '../utils';
 import { data, statuses, daysOfWeek } from '../data';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import DashboardHeader from "../components/DashboardHeader";
 
 const Homepage = () => {
     const [items, setItems] = useState(data);
@@ -36,17 +39,19 @@ const Homepage = () => {
     const dropWrappers = [];
 
     const dayWrapper = (day) => 
+    <Col>
         <div key={day} className={"col-wrapper"}>
             <h2 className={"col-header"}>{day}</h2>
-            <DropWrapper>
-                <Col>
+            <DropWrapper onDrop={onDrop}>
+                <ColWrapper>
                     {items
-                        .filter(i => getDayFromDate(i.date).getDay() === new Date(year, month, day))
+                        .filter(i => { return getDayFromDate(i.date).getTime() == new Date(year, month - 1, day).getTime(); })
                         .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} />)
                     }
-                </Col>
+                </ColWrapper>
             </DropWrapper>
         </div>
+    </Col>
 
     const weekCalendar = (startDay, endDay) => {
         const view = [];
@@ -62,39 +67,20 @@ const Homepage = () => {
         const newRow = date.getDate() == endDayOfMonth || date.getDay() % 7 == 6;
 
         if (newRow) {
-            dropWrappers.push(<div className={'row'}>{ weekCalendar(prevDay, day) }</div>);
-            // newRow ? 
-            //     <div className={'row'}>
-            //         { 
-            //         column(day)
-            //         }
-            //     </div> : 
-            //     column(day)
+            dropWrappers.push(<Row>{ weekCalendar(prevDay, day) }</Row>);
             prevDay = day;
         }
     }
 
     return (
-        <div className={'row'}>
-            {
-                dropWrappers
-            // daysOfWeek.map(d => {
-            //     return (
-                    // <div key={d.day} className={"col-wrapper"}>
-                    //     <h2 className={"col-header"}>{d.dayStr.toUpperCase()}</h2>
-                    //     <DropWrapper onDrop={onDrop} /*status={s.status}*/>
-                    //         <Col>
-                    //             {items
-                    //                 .filter(i => getDayFromDate(i.date).getDay() === d.day)
-                    //                 .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} />)
-                    //             }
-                    //         </Col>
-                    //     </DropWrapper>
-                    // </div>
-                // );
-            // })
-            }
-        </div>
+        <>
+            <DashboardHeader year={year} month={month}/>
+            <div style={{ display: 'block' }}>
+                {
+                    dropWrappers
+                }
+            </div>
+        </>
     );
 };
 
