@@ -3,7 +3,7 @@ import { useDrop } from "react-dnd";
 import ITEM_TYPE from "../data/types";
 import { statuses } from "../data";
 
-const DropWrapper = ({ onDrop, children, date }) => {
+const DropWrapper = ({ onDrop, children, day }) => {
     const [{ isOver }, drop] = useDrop({
         accept: ITEM_TYPE,
         canDrop: (item, monitor) => {
@@ -13,7 +13,7 @@ const DropWrapper = ({ onDrop, children, date }) => {
             return true;
         },
         drop: (item, monitor) => {
-            onDrop(item, monitor, item.status, date/*status*/);
+            onDrop(item, monitor, item.status, day/*status*/);
         },
         collect: monitor => ({
             isOver: monitor.isOver()

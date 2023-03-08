@@ -11,13 +11,17 @@ import DashboardHeader from "../components/DashboardHeader";
 const Homepage = () => {
     const [items, setItems] = useState(data);
 
-    const onDrop = (item, monitor, status, date) => {
+    // TODO: work with month and year
+    const month = 4;
+    const year = 2023;
+
+    const onDrop = (item, monitor, status, day) => {
         const mapping = statuses.find(si => si.status === status);
 
         setItems(prevState => {
             const newItems = prevState
                 .filter(i => i.id !== item.id)
-                .concat({ ...item, status, icon: mapping.icon, date });
+                .concat({ ...item, status, icon: mapping.icon, date: (new Date(year, month - 1, day)).toString() });
             return [ ...newItems ];
         });
     };
@@ -31,9 +35,6 @@ const Homepage = () => {
         });
     };
 
-    // TODO: work with month and year
-    const month = 4;
-    const year = 2023;
     const endDayOfMonth = getLastDayFromMonthAndYear(year, month);
 
     const dropWrappers = [];
@@ -42,7 +43,7 @@ const Homepage = () => {
     <Col>
         <div key={day} className={"col-wrapper"}>
             <h2 className={"col-header"}>{day}</h2>
-            <DropWrapper onDrop={onDrop}>
+            <DropWrapper onDrop={onDrop} day={day}>
                 <ColWrapper>
                     {items
                         .filter(i => { return getDayFromDate(i.date).getTime() == new Date(year, month - 1, day).getTime(); })
