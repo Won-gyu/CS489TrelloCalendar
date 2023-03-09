@@ -7,13 +7,13 @@ import { data, statuses, daysOfWeek } from '../data';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DashboardHeader from "../components/DashboardHeader";
+import { useParams } from "react-router-dom";
 
-const Homepage = () => {
+const Homepage = (props) => {
     const [items, setItems] = useState(data);
 
     // TODO: work with month and year
-    const month = 4;
-    const year = 2023;
+    const { month = 4, year = 2023 } = useParams();
 
     const onDrop = (item, monitor, status, day) => {
         const mapping = statuses.find(si => si.status === status);
@@ -56,23 +56,24 @@ const Homepage = () => {
 
     const weekCalendar = (startDay, endDay) => {
         const view = [];
-        for (let day = startDay; day < endDay; day++) {
+        for (let day = startDay; day <= endDay; day++) {
             view.push(<> { dayWrapper(day) } </>)
         }
         return view;
     }
 
-    let prevDay = 0;
-    for (let day = 0; day < endDayOfMonth; day++) {
+    let prevDay = 1;
+    for (let day = 1; day <= endDayOfMonth; day++) {
         const date = new Date(year, month - 1, day);
-        const newRow = date.getDate() == endDayOfMonth || date.getDay() % 7 == 6;
+        const isEndDayOfMonth = date.getDate() == endDayOfMonth;
+        const newRow = isEndDayOfMonth || date.getDay() % 7 == 6;
 
         if (newRow) {
             dropWrappers.push(<Row>{ weekCalendar(prevDay, day) }</Row>);
-            prevDay = day;
+            prevDay = day + 1;
         }
     }
-
+    
     return (
         <>
             <DashboardHeader year={year} month={month}/>
