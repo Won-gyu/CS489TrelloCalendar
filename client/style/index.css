@@ -126,10 +126,14 @@ select {
     margin-top: 0;
 }
 
-.col {
-    min-height: 300px;
-    max-width: 300px;
-    width: 300px;
+.col.inside {
+    min-height: 200px;
+}
+
+.col.day {
+    min-height: 200px;
+    max-width: 200px;
+    width: 200px;
 }
 
 .highlight-region {

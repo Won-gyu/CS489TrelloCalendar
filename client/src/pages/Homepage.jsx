@@ -40,7 +40,7 @@ const Homepage = () => {
     const dropWrappers = [];
 
     const dayWrapper = (day) => 
-    <Col>
+    <Col className="day">
         <div key={day} className={"col-wrapper"}>
             <h2 className={"col-header"}>{day}</h2>
             <DropWrapper onDrop={onDrop} day={day}>
