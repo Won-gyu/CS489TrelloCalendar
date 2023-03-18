@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import Item from '../components/Item';
 import DropWrapper from "../components/DropWrapper";
 import ColWrapper from '../components/Col';
@@ -75,14 +75,14 @@ const Homepage = (props) => {
     }
     
     return (
-        <>
+        <div className='calendarPage'>
             <DashboardHeader year={year} month={month}/>
             <div style={{ display: 'block' }}>
                 {
                     dropWrappers
                 }
             </div>
-        </>
+        </div>
     );
 };
 
