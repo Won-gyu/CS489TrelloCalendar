@@ -6,10 +6,16 @@
     --background-color: #f5eaea;
 }
 
-html {
+.calendarPage {
     background: rgb(0,73,191);
     background: linear-gradient(90deg, rgba(0,73,191,1) 0%, rgba(190,190,255,1) 46%, rgba(0,212,255,1) 100%);
 }
+
+/* 
+html {
+    background: rgb(0,73,191);
+    background: linear-gradient(90deg, rgba(0,73,191,1) 0%, rgba(190,190,255,1) 46%, rgba(0,212,255,1) 100%);
+} */
 
 body {
     color: var(--text-color);
@@ -34,7 +40,7 @@ label {
     display: block;
 }
 
-button, input {
+/* button, input {
     padding: 4px;
     border: 1px solid var(--disabled-color);
 }
@@ -59,7 +65,7 @@ button.active:after {
     width: 50%;
     padding-top: 4px;
     border-bottom: 1px solid var(--primary-color);
-}
+} */
 
 input:focus {
     outline: none;
@@ -151,12 +157,16 @@ select {
     text-align: center;
 }
 
-.page-subheader {
+.page-subheader .col {
+    padding: 0px 0px 0px 0px;
+}
+
+.page-subheader .middle {
     background-color: #27aa80;
     padding: 7px;
     color: white;
     font-size: 15px;
-    flex: 1 100%;
+    /* flex: 1 100%; */
     margin-top: 0;
     margin-bottom: 0;
     text-align: left;

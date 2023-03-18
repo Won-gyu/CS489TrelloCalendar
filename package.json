@@ -8,6 +8,7 @@
     "dev": "nodemon server/index.js"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "core-js": "^3.2.1",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
