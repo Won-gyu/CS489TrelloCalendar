@@ -17,11 +17,13 @@ const Homepage = (props) => {
 
     const onDrop = (item, monitor, status, day) => {
         const mapping = statuses.find(si => si.status === status);
+        const date = (new Date(year, month - 1, day)).toDateString();
 
         setItems(prevState => {
+            // console.log('@@@ ' + JSON.stringify(prevState));
             const newItems = prevState
                 .filter(i => i.id !== item.id)
-                .concat({ ...item, status, icon: mapping.icon, date: (new Date(year, month - 1, day)).toString() });
+                .concat({ ...item, status, icon: mapping.icon, date: date });
             return [ ...newItems ];
         });
     };
@@ -40,19 +42,19 @@ const Homepage = (props) => {
     const dropWrappers = [];
 
     const dayWrapper = (day) => 
-    <Col className="day">
-        <div key={day} className={"col-wrapper"}>
-            <h2 className={"col-header"}>{day}</h2>
-            <DropWrapper onDrop={onDrop} day={day}>
-                <ColWrapper>
-                    {items
-                        .filter(i => { return getDayFromDate(i.date).getTime() == new Date(year, month - 1, day).getTime(); })
-                        .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} />)
-                    }
-                </ColWrapper>
-            </DropWrapper>
-        </div>
-    </Col>
+        <Col className="day">
+            <div key={day} className={"col-wrapper"}>
+                <h2 className={"col-header"}>{day}</h2>
+                <DropWrapper onDrop={onDrop} day={day}>
+                    <ColWrapper>
+                        {items
+                            .filter(i => { return i.date == new Date(year, month - 1, day).toDateString(); })
+                            .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} />)
+                        }
+                    </ColWrapper>
+                </DropWrapper>
+            </div>
+        </Col>
 
     const weekCalendar = (startDay, endDay) => {
         const view = [];
