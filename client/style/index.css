@@ -172,7 +172,7 @@ select {
     text-align: left;
 }
 
-.modal {
+.my-modal {
     background-color: #F4F5F7;
     border-radius: 2px;
     margin: 48px 0 80px;

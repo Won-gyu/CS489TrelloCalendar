@@ -8,7 +8,7 @@ const Window = ({ show, onClose, item }) => {
         <Modal
             isOpen={show}
             onRequestClose={onClose}
-            className={"modal"}
+            className={"my-modal"}
             overlayClassName={"overlay"}
         >
             <div className={"close-btn-ctn"}>
