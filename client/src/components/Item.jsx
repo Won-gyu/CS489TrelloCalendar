@@ -3,7 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../data/types";
 
-const Item = ({ item, index, moveItem, status }) => {
+const Item = ({ item, index, moveItem, status, day }) => {
     const ref = useRef(null);
 
     const [, drop] = useDrop({
@@ -31,8 +31,8 @@ const Item = ({ item, index, moveItem, status }) => {
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return;
             }
-            // console.log('@@@ ' + hoverIndex + ' ' + JSON.stringify(item));
-            moveItem(dragIndex, hoverIndex);
+            
+            moveItem(dragIndex, hoverIndex, day);
             item.index = hoverIndex;
         },
     });
