@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Item from '../components/Item';
 import DropWrapper from "../components/DropWrapper";
 import ColWrapper from '../components/Col';
@@ -12,6 +12,11 @@ import { useParams } from "react-router-dom";
 const Homepage = (props) => {
     const { month = 4, year = 2023 } = useParams();
     const [items, setItems] = useState(getTasksByDay(data, year, month));
+
+    useEffect(() => {
+        setItems(getTasksByDay(data, year, month));
+      }, [month, year]);
+
 
     const onDrop = (item, monitor, status, day) => {
         const mapping = statuses.find(si => si.status === status);
@@ -52,8 +57,8 @@ const Homepage = (props) => {
                 <h2 className={"col-header"}>{day}</h2>
                 <DropWrapper onDrop={onDrop} day={day}>
                     <ColWrapper>
-                        { items[day]
-                            .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} day={day} />)
+                        { day < items.length ? items[day]
+                            .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} day={day} />) : <></>
                         }
                     </ColWrapper>
                 </DropWrapper>

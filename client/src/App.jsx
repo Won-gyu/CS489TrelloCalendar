@@ -4,24 +4,27 @@ import Header from './components/Header';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
+
     Switch,
     Route,
     Link
   } from "react-router-dom";
+//   import { createBrowserHistory } from 'history';
 
 const App = () => {
+    // const history = createBrowserHistory();
     return (
-        <Router>
+        <BrowserRouter>
             <Switch>
                 <DndProvider backend={HTML5Backend}>
                     <Header/>
-                    <Route path="/:year?/:month?">
+                    <Route path="/:year?/:month?" history={history}>
                         <Homepage />
                     </Route>
                 </DndProvider>
             </Switch>
-        </Router>
+        </BrowserRouter>
     );
 };
 
