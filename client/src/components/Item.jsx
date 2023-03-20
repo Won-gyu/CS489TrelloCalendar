@@ -31,6 +31,7 @@ const Item = ({ item, index, moveItem, status }) => {
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return;
             }
+            console.log('@@@ ' + hoverIndex);
             moveItem(dragIndex, hoverIndex);
             item.index = hoverIndex;
         },
