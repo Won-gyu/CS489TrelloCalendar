@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+const moment = require('moment');
 
 Modal.setAppElement("#app");
 
@@ -20,6 +21,8 @@ const Window = ({ show, onClose, item }) => {
                 <p>{item.content}</p>
                 <h2>Status</h2>
                 <p>{item.icon} {`${item.status.charAt(0).toUpperCase()}${item.status.slice(1)}`}</p>
+                <h2>Date</h2>
+                <p>{ moment(new Date(item.date)).format('YYYY - MM - DD') }</p>
             </div>
         </Modal>
     );
