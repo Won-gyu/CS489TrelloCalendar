@@ -3,20 +3,35 @@ import Item from '../components/Item';
 import DropWrapper from "../components/DropWrapper";
 import ColWrapper from '../components/Col';
 import { removeTask, getLastDayFromMonthAndYear, getTasksByDay } from '../utils';
-import { data, statuses, daysOfWeek } from '../data';
+import { defaultData, statuses, daysOfWeek } from '../data';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DashboardHeader from "../components/DashboardHeader";
 import { useParams } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 const Homepage = (props) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['trelloData']);
+    const getData = () => {
+        return cookies.trelloData || defaultData;
+    }
+
     const { month = 4, year = 2023 } = useParams();
-    const [items, setItems] = useState(getTasksByDay(data, year, month));
+    const [items, setItems] = useState(getTasksByDay(getData(), year, month));
+
 
     useEffect(() => {
-        setItems(getTasksByDay(data, year, month));
+        console.log(items);
+        setItems(getTasksByDay(getData(), year, month));
       }, [month, year]);
 
+    const saveTask = (item) => {
+        const data = getData();
+        data[item.id - 1] = item;
+        setCookie('trelloData', data);
+        cookies.data = data;
+        console.log(cookies.data);
+    }
 
     const onDrop = (item, monitor, status, day) => {
         const mapping = statuses.find(si => si.status === status);
@@ -28,6 +43,8 @@ const Homepage = (props) => {
                 const itemsOnDay = newItems[day];
                 item.date = date.toISOString();
                 itemsOnDay.push(item);
+
+                saveTask(item);
     
                 return [ ...newItems ];
             });

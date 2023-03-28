@@ -15,6 +15,7 @@
     "file-loader": "^5.1.0",
     "react": "^16.10.2",
     "react-bootstrap": "^2.7.2",
+    "react-cookie": "^4.1.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^16.10.2",

@@ -1,4 +1,4 @@
-const data = [{
+const defaultData = [{
     id: 1,
     // priority: 0,
     icon: "⭕️",
@@ -80,4 +80,4 @@ const daysOfWeek = [{
     color: "#EB5A46"
 }];
 
-export { data, statuses, daysOfWeek };
+export { defaultData, statuses, daysOfWeek };
