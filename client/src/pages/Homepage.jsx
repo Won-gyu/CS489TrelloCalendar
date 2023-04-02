@@ -66,8 +66,6 @@ const Homepage = (props) => {
 
     const dropWrappers = [];
 
-    
-
     const dayWrapper = (day) => 
         <Col className="day">
             <div key={day} className={"col-wrapper"}>
@@ -75,7 +73,7 @@ const Homepage = (props) => {
                 <DropWrapper onDrop={onDrop} day={day}>
                     <ColWrapper>
                         { day < items.length ? items[day]
-                            .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={i.status} day={day} />) : <></>
+                            .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={statuses[i.statusIdx]} day={day} saveTask={saveTask} />) : <></>
                         }
                     </ColWrapper>
                 </DropWrapper>

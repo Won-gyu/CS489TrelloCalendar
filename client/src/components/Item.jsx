@@ -3,7 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../data/types";
 
-const Item = ({ item, index, moveItem, status, day }) => {
+const Item = ({ item, index, moveItem, status, day, saveTask }) => {
     const ref = useRef(null);
 
     const [, drop] = useDrop({
@@ -69,6 +69,7 @@ const Item = ({ item, index, moveItem, status, day }) => {
                 item={item}
                 onClose={onClose}
                 show={show}
+                saveTask={saveTask}
             />
         </Fragment>
     );
