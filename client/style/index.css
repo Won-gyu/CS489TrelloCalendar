@@ -209,3 +209,39 @@ select {
 .close-btn:hover {
     background-color: #DCDCDC;
 }
+.login-btn {
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
+
+.login-btn:focus {
+    outline: none;
+    transform: scale(0.98);
+}
+
+.login-btn:active {
+    background-color: #004085;
+    transform: scale(0.95);
+}
+
+.login-btn-position {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
