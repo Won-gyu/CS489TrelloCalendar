@@ -209,7 +209,7 @@ select {
 .close-btn:hover {
     background-color: #DCDCDC;
 }
-.login-btn {
+.login-btn, .logout-btn{
     display: inline-block;
     font-family: Arial, sans-serif;
     font-size: 16px;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+//import "../style/auth.css";
+
 
 const LoginPage = ({ users, setUser }) => {
     const [email, setEmail] = useState("");
@@ -17,15 +19,15 @@ const LoginPage = ({ users, setUser }) => {
     };
 
     return (
-        <div className="container">
-            <h2>Login</h2>
-            <label>Email:</label>
+        <div className="container login-container">
+            <h2 className="lrh2">Login</h2>
+            <label className="lrlbl">Email:</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
-            <label>Password:</label>
+            <label className="lrlbl">Password:</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Login</button>
-            <button onClick={() => history.push("/register")}>Register</button>
-            <button onClick={() => history.push("/")}>Go to Main Page</button>
+            <button className="lrbtn" onClick={handleLogin}>Login</button>
+            <button className="lrbtn" onClick={() => history.push("/register")}>Register</button>
+            <button className="lrbtn" onClick={() => history.push("/")}>Go to Main Page</button>
         </div>
     );
 };
