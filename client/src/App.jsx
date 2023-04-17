@@ -11,10 +11,21 @@ import {
     Switch,
     Route
 } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 const App = () => {
-    const [users, setUsers] = useState([]);
+    const [cookies, setCookie, removeCookie] = useCookies(['trelloUserData']);
+    // const [users, setUsers] = useState([]);
     const [user, setUser] = useState(null);
+
+    const setUsers = (users) => {
+        setCookie('trelloUserData', users);
+    }
+
+    const getUsers = () => {
+        return cookies.trelloUserData || [];
+    }
+    const users = getUsers();
 
     return (
         <BrowserRouter>
