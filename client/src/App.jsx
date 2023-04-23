@@ -12,6 +12,7 @@ import {
     Redirect
 } from "react-router-dom";
 import { useCookies } from 'react-cookie';
+import ProjectManager from './pages/ProjectManager';
 
 const App = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['trelloUserData']);
@@ -33,6 +34,9 @@ const App = () => {
                 <Switch>
                     <Route path="/login">
                         <LoginPage users={users} setUser={setUser} />
+                    </Route>
+                    <Route path="/manage">
+                        <ProjectManager />
                     </Route>
                     <Route path="/register">
                         <RegisterPage users={users} setUsers={setUsers} />
