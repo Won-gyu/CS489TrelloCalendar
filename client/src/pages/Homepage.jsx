@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import DashboardHeader from "../components/DashboardHeader";
 import { useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
+import Window from "../components/Window";
 
 const Homepage = (props) => {
     const [cookies, setCookie, removeCookie] = useCookies(['trelloData']);
@@ -19,17 +20,25 @@ const Homepage = (props) => {
     const { month = 4, year = 2023 } = useParams();
     const [items, setItems] = useState(getTasksByDay(getData(), year, month));
 
+    const refreshPage = () => {
+        setItems(getTasksByDay(getData(), year, month));
+    }
 
     useEffect(() => {
         console.log(items);
-        setItems(getTasksByDay(getData(), year, month));
+        refreshPage();
       }, [month, year]);
 
     const saveTask = (item) => {
         const data = getData();
+        if (item.id == null)
+        {
+            item.id = data.length;
+        }
         data[item.id - 1] = item;
         setCookie('trelloData', data);
         cookies.data = data;
+        refreshPage();
         console.log(cookies.data);
     }
 
@@ -99,14 +108,24 @@ const Homepage = (props) => {
             prevDay = day + 1;
         }
     }
-    
+
+    const [showAddTask, setShowAddTask] = useState(false);
+    const onCloseAddTask = () => setShowAddTask(false);
+    const onAddTask = () => setShowAddTask(true);
+
     return (
         <div className='calendarPage'>
             <DashboardHeader year={year} month={month}/>
+            <button className="close-btn" onClick={onAddTask}>✏️</button>
             <div style={{ display: 'block' }}>
                 {
                     dropWrappers
                 }
+                <Window
+                    onClose={onCloseAddTask}
+                    show={showAddTask}
+                    saveTask={saveTask}
+                />
             </div>
         </div>
     );

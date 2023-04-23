@@ -38,7 +38,7 @@ const App = () => {
                         <RegisterPage users={users} setUsers={setUsers} />
                     </Route>
                     {user ?
-                        <Route exact path="/">
+                        <Route path="/:year?/:month?" history={history}>
                             <Homepage />
                         </Route>
                         :

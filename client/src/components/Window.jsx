@@ -6,17 +6,22 @@ const moment = require('moment');
 Modal.setAppElement("#app");
 
 const Window = ({ show, onClose, item, saveTask }) => {
-    const [isEditView, setIsEditView] = useState(false);
-    const [title, setTitle] = useState(item.title);
-    const [content, setContent] = useState(item.content);
-    const [date, setDate] = useState(item.date);
-    const [statusIdx, setStatusIdx] = useState(item.statusIdx);
+    const [isEditView, setIsEditView] = useState(item == null);
+    const [title, setTitle] = useState(item ? item.title : "");
+    const [content, setContent] = useState(item ? item.content : "");
+    const [date, setDate] = useState(item ? item.date : "");
+    const [statusIdx, setStatusIdx] = useState(item ? item.statusIdx : 0);
 
     const onEdit = () => { setIsEditView(!isEditView); }
 
     useEffect(() => {
         if (!isEditView)
         {
+            if (item == null)
+            {
+                // add task
+                item = {};
+            }
             item.title = title;
             item.content = content;
             item.date = date;
@@ -66,7 +71,10 @@ const Window = ({ show, onClose, item, saveTask }) => {
                 <h2>Date</h2>
                 { 
                     isEditView ? 
-                        <input type="date" value={date} onChange={(e) => { setDate(e.target.value); }} />
+                        <input type="date" value={moment(new Date(date)).utc().format('YYYY-MM-DD')} onChange={(e) =>
+                            {
+                                setDate(moment(e.target.value).utc().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'));
+                            }} />
                         : <p>{ moment(new Date(date)).utc().format('YYYY - MM - DD') }</p> 
                 }
             </div>

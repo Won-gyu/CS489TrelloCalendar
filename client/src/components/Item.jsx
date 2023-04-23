@@ -46,9 +46,7 @@ const Item = ({ item, index, moveItem, status, day, saveTask }) => {
     });
 
     const [show, setShow] = useState(false);
-
     const onOpen = () => setShow(true);
-
     const onClose = () => setShow(false);
 
     drag(drop(ref));
