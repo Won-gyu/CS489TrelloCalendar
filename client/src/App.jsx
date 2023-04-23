@@ -39,7 +39,7 @@ const App = () => {
                     </Route>
                     {user ?
                         <Route path="/:year?/:month?" history={history}>
-                            <Homepage />
+                            <Homepage user={user}/>
                         </Route>
                         :
                         <Route exact path="/">

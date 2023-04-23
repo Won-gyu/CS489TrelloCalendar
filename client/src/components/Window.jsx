@@ -5,8 +5,9 @@ const moment = require('moment');
 
 Modal.setAppElement("#app");
 
-const Window = ({ show, onClose, item, saveTask }) => {
+const Window = ({ user, show, onClose, item, saveTask }) => {
     const [isEditView, setIsEditView] = useState(item == null);
+    const [email, setEmail] = useState(item ? item.email : "");
     const [title, setTitle] = useState(item ? item.title : "");
     const [content, setContent] = useState(item ? item.content : "");
     const [date, setDate] = useState(item ? item.date : "");
@@ -22,6 +23,7 @@ const Window = ({ show, onClose, item, saveTask }) => {
                 // add task
                 item = {};
             }
+            item.email = email;
             item.title = title;
             item.content = content;
             item.date = date;
@@ -49,10 +51,17 @@ const Window = ({ show, onClose, item, saveTask }) => {
                         : <h1 style={{ flex: "1 90%" }}>{title}</h1>
                 }
                 
-                <button className="close-btn" onClick={onEdit}>✏️</button>
+                {
+                    email === "" || user.email === email ? <button className="close-btn" onClick={onEdit}>✏️</button> : <></>
+                }
+                
                 <button className="close-btn" onClick={onClose}>X</button>
             </div>
             <div>
+                <h4>Author</h4>
+                { 
+                    isEditView ? <p>{ user.email }</p> : <p>{ email }</p> 
+                }
                 <h2>Description</h2>
                 { 
                     isEditView ? 

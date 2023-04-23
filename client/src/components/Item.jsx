@@ -3,7 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../data/types";
 
-const Item = ({ item, index, moveItem, status, day, saveTask }) => {
+const Item = ({ user, item, index, moveItem, status, day, saveTask }) => {
     const ref = useRef(null);
 
     const [, drop] = useDrop({
@@ -64,6 +64,7 @@ const Item = ({ item, index, moveItem, status, day, saveTask }) => {
                 <p className={"item-status"}>{item.icon}</p>
             </div>
             <Window
+                user={user}
                 item={item}
                 onClose={onClose}
                 show={show}
