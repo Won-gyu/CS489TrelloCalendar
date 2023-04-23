@@ -9,9 +9,8 @@ import Col from 'react-bootstrap/Col';
 import DashboardHeader from "../components/DashboardHeader";
 import { useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import Window from "../components/Window";
 
-const Homepage = ({ user }) => {
+const Homepage = (props) => {
     const [cookies, setCookie, removeCookie] = useCookies(['trelloData']);
     const getData = () => {
         return cookies.trelloData || defaultData;
@@ -20,25 +19,17 @@ const Homepage = ({ user }) => {
     const { month = 4, year = 2023 } = useParams();
     const [items, setItems] = useState(getTasksByDay(getData(), year, month));
 
-    const refreshPage = () => {
-        setItems(getTasksByDay(getData(), year, month));
-    }
 
     useEffect(() => {
         console.log(items);
-        refreshPage();
+        setItems(getTasksByDay(getData(), year, month));
       }, [month, year]);
 
     const saveTask = (item) => {
         const data = getData();
-        if (item.id == null)
-        {
-            item.id = data.length + 1;
-        }
         data[item.id - 1] = item;
         setCookie('trelloData', data);
         cookies.data = data;
-        refreshPage();
         console.log(cookies.data);
     }
 
@@ -75,7 +66,6 @@ const Homepage = ({ user }) => {
 
     const dropWrappers = [];
 
-
     const dayWrapper = (day) => 
         <Col className="day">
             <div key={day} className={"col-wrapper"}>
@@ -83,7 +73,7 @@ const Homepage = ({ user }) => {
                 <DropWrapper onDrop={onDrop} day={day}>
                     <ColWrapper>
                         { day < items.length ? items[day]
-                            .map((i, idx) => <Item user={user} key={i.id} item={i} index={idx} moveItem={moveItem} status={statuses[i.statusIdx]} day={day} saveTask={saveTask} />) : <></>
+                            .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={statuses[i.statusIdx]} day={day} saveTask={saveTask} />) : <></>
                         }
                     </ColWrapper>
                 </DropWrapper>
@@ -109,35 +99,14 @@ const Homepage = ({ user }) => {
             prevDay = day + 1;
         }
     }
-
-    const [showAddTask, setShowAddTask] = useState(false);
-    const onCloseAddTask = () =>
-    {
-        resetChildState();
-        setShowAddTask(false);
-    }
-    const onAddTask = () => setShowAddTask(true);
-    const [childKey, setChildKey] = useState(0);
-
-    const resetChildState = () => {
-        setChildKey(prevKey => prevKey + 1);
-    };
-
+    
     return (
         <div className='calendarPage'>
             <DashboardHeader year={year} month={month}/>
-            <button className="close-btn" onClick={onAddTask}>✏️</button>
             <div style={{ display: 'block' }}>
                 {
                     dropWrappers
                 }
-                <Window
-                    key={childKey}
-                    user={user}
-                    onClose={onCloseAddTask}
-                    show={showAddTask}
-                    saveTask={saveTask}
-                />
             </div>
         </div>
     );

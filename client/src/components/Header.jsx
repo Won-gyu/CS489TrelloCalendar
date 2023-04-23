@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useHistory } from "react-router-dom";
 
@@ -9,7 +8,7 @@ const Header = ({ user, setUser }) => {
         if (user) {
             alert("You're already logged in!");
         } else {
-            history.push("/login");
+            history.push("/");
         }
     };
 

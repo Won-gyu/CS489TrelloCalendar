@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-//import "../style/auth.css";
 
 
 const LoginPage = ({ users, setUser }) => {
@@ -12,7 +11,7 @@ const LoginPage = ({ users, setUser }) => {
         const user = users.find(user => user.email === email && user.password === password);
         if (user) {
             setUser(user);
-            history.push("/");
+            history.push("/manager");
         } else {
             alert("Invalid email or password");
         }
