@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import "../styles/manager.css";
-import Homepage from "./Homepage";
 import { useHistory } from "react-router-dom";
 
 function ProjectManager() {
@@ -10,7 +9,6 @@ function ProjectManager() {
   );
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [showHomepage, setShowHomepage] = useState(false);
   const history = useHistory();
 
   const handleName = (event) => {
@@ -19,6 +17,11 @@ function ProjectManager() {
 
   const handleDesc = (event) => {
     setDesc(event.target.value);
+  };
+
+  const handleDelete = (id) => {
+    const updatedProjects = projects.filter((project) => project.id !== id);
+    setProjects(updatedProjects);
   };
 
   const newProject = () => {
@@ -38,10 +41,6 @@ function ProjectManager() {
     }
   };
 
-  const handleShowHomepage = () => {
-    history.push("/homepage");
-  }
-
   useEffect(() => {
     localStorage.setItem("projects", JSON.stringify(projects));
   }, [projects]);
@@ -54,7 +53,8 @@ function ProjectManager() {
             <div className="card" key={project.id}>
               <h2>{project.title}</h2>
               <p>{project.content}</p>
-              <Button variant="primary" onClick={handleShowHomepage}>Edit Project</Button>
+              <Button variant="primary" onClick={() => history.push("/")}>View Project</Button>
+              <Button variant="danger" onClick={() => handleDelete(project.id)}>Delete Project</Button>
             </div>
           );
         })}
@@ -88,7 +88,6 @@ function ProjectManager() {
           Add New Project!
         </Button>
       </div>
-      {showHomepage && <Homepage />}
     </div>
   );
 }

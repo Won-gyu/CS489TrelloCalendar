@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Homepage from './pages/Homepage';
 import Header from './components/Header';
@@ -6,40 +5,55 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import ProjectManager from './pages/ProjectManager';
 import {
     BrowserRouter,
     Switch,
-    Route
+    Route,
+    Redirect
 } from "react-router-dom";
-
+import { useCookies } from 'react-cookie';
+import ProjectManager from './pages/ProjectManager';
 
 const App = () => {
-    const [users, setUsers] = useState([]);
+    const [cookies, setCookie, removeCookie] = useCookies(['trelloUserData']);
     const [user, setUser] = useState(null);
+
+    const setUsers = (users) => {
+        setCookie('trelloUserData', users);
+    }
+
+    const getUsers = () => {
+        return cookies.trelloUserData || [];
+    }
+    const users = getUsers();
 
     return (
         <BrowserRouter>
-            <Switch>
-                <DndProvider backend={HTML5Backend}>
-                    <Header user={user} setUser={setUser} />
-                    <Route path="/">
+            <DndProvider backend={HTML5Backend}>
+                <Header user={user} setUser={setUser} />
+                <Switch>
+                    <Route path="/login">
                         <LoginPage users={users} setUser={setUser} />
+                    </Route>
+                    <Route path="/manage">
+                        <ProjectManager />
                     </Route>
                     <Route path="/register">
                         <RegisterPage users={users} setUsers={setUsers} />
                     </Route>
-                    <Route path="/homepage">
-                        <Homepage />
-                    </Route>
-                    <Route path="/manager">
-                        <ProjectManager />
-                    </Route>
-                </DndProvider>
-            </Switch>
+                    {user ?
+                        <Route path="/:year?/:month?" history={history}>
+                            <Homepage user={user}/>
+                        </Route>
+                        :
+                        <Route exact path="/">
+                            <Redirect to="/login" />
+                        </Route>
+                    }
+                </Switch>
+            </DndProvider>
         </BrowserRouter>
     );
 };
 
 export default App;
-
