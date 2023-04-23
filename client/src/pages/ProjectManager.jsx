@@ -53,8 +53,8 @@ function ProjectManager() {
             <div className="card" key={project.id}>
               <h2>{project.title}</h2>
               <p>{project.content}</p>
-              <Button variant="primary" onClick={() => history.push("/")}>View Project</Button>
-              <Button variant="danger" onClick={() => handleDelete(project.id)}>Delete Project</Button>
+              <Button className="manager" variant="primary" onClick={() => history.push("/")}>View Project</Button>
+              <Button className="manager" variant="danger" onClick={() => handleDelete(project.id)}>Delete Project</Button>
             </div>
           );
         })}
@@ -84,7 +84,7 @@ function ProjectManager() {
           value={desc}
           onChange={handleDesc}
         ></input>
-        <Button variant="primary" onClick={newProject}>
+        <Button className="manager" variant="primary" onClick={newProject}>
           Add New Project!
         </Button>
       </div>
