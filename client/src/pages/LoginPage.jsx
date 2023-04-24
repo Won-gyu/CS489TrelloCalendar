@@ -12,7 +12,7 @@ const LoginPage = ({ users, setUser }) => {
         const user = users.find(user => user.email === email && user.password === password);
         if (user) {
             setUser(user);
-            history.push("/");
+            history.push("/manage");
         } else {
             alert("Invalid email or password");
         }
