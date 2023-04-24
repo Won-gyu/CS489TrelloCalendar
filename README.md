@@ -13,16 +13,15 @@ npm install
 
 ## Usage
 
+# run
+
 ```
-npm run build
 npm run dev
 ```
+and then open localhost:4000 in your browser
 
-## Contributing
-
-Add your commit notes to commit.log
-When committing use
+# build
 
 ```
-git commit -F commmit.log
+npm run build
 ```

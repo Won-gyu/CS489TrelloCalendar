@@ -1,6 +1,5 @@
 const defaultData = [{
     id: 1,
-    // priority: 0,
     email: "test",
     statusIdx: 0,
     date: "2023-04-07T07:00:00.000Z",
@@ -8,7 +7,6 @@ const defaultData = [{
     content: "Fill out human interest distribution form"
 }, {
     id: 2,
-    // priority: 1,
     email: "test",
     statusIdx: 0,
     date: "2023-04-07T07:00:00.000Z",
@@ -16,7 +14,6 @@ const defaultData = [{
     content: "Get an anniversary gift"
 }, {
     id: 3,
-    // priority: 2,
     email: "test",
     statusIdx: 0,
     date: "2023-04-07T07:00:00.000Z",
@@ -24,7 +21,6 @@ const defaultData = [{
     content: "Call the bank to talk about investments"
 }, {
     id: 4,
-    // priority: 3,
     email: "test",
     statusIdx: 0,
     date: "2023-04-07T07:00:00.000Z",
