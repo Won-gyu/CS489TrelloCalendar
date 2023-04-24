@@ -7,7 +7,7 @@ Modal.setAppElement("#app");
 
 const Window = ({ user, show, onClose, item, saveTask }) => {
     const [isEditView, setIsEditView] = useState(item == null);
-    const [email, setEmail] = useState(item ? item.email : "");
+    const [email, setEmail] = useState(item ? item.email : user.email);
     const [title, setTitle] = useState(item ? item.title : "");
     const [content, setContent] = useState(item ? item.content : "");
     const [date, setDate] = useState(item ? item.date : "");
@@ -23,7 +23,7 @@ const Window = ({ user, show, onClose, item, saveTask }) => {
                 // add task
                 item = {};
             }
-            item.email = email;
+            item.email = user.email;
             item.title = title;
             item.content = content;
             item.date = date;
