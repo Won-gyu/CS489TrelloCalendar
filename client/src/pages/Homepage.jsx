@@ -14,7 +14,7 @@ const Homepage = ({ user }) => {
     const { month = 4, year = 2023 } = useParams();
     const [items, setItems] = useState([], year, month);
     let tasks = [];
-    const apiUrl = 'http://localhost:3000/task';
+    const apiUrl = 'https://trello-calendar-server.onrender.com/task';
 
     const processFetchedTasks = (fetchedTasks) => {
         tasks = fetchedTasks;

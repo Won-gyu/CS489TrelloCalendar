@@ -16,7 +16,7 @@ import ProjectManager from './pages/ProjectManager';
 const App = () => {
     const [user, setUser] = useState(null);
     const [users, setUsers] = useState([]);
-    const apiUrl = 'http://localhost:3000/user';
+    const apiUrl = 'https://trello-calendar-server.onrender.com/user';
 
     const refreshUsers = () => {
         fetch(apiUrl)

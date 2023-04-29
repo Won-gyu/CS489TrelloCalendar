@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 
 const LoginPage = ({ setUser }) => {
-    const apiUrl = 'http://localhost:3000/login';
+    const apiUrl = 'https://trello-calendar-server.onrender.com/login';
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
