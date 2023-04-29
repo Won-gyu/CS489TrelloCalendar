@@ -8,38 +8,72 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DashboardHeader from "../components/DashboardHeader";
 import { useParams } from "react-router-dom";
-import { useCookies } from 'react-cookie';
 import Window from "../components/Window";
 
 const Homepage = ({ user }) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['trelloData']);
-    const getData = () => {
-        return cookies.trelloData || defaultData;
-    }
-
     const { month = 4, year = 2023 } = useParams();
-    const [items, setItems] = useState(getTasksByDay(getData(), year, month));
+    const [items, setItems] = useState([], year, month);
+    let tasks = [];
+    const apiUrl = 'http://localhost:3000/task';
+
+    const processFetchedTasks = (fetchedTasks) => {
+        tasks = fetchedTasks;
+        console.log(tasks);
+        setItems(getTasksByDay(tasks, year, month));
+      };
 
     const refreshPage = () => {
-        setItems(getTasksByDay(getData(), year, month));
+        fetch(apiUrl)
+            .then((response) => {
+            // Check if the request was successful.
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+            })
+            .then((tasks) => {
+                processFetchedTasks(tasks);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     }
 
     useEffect(() => {
-        console.log(items);
+        refreshPage();
+      }, []);
+
+    useEffect(() => {
         refreshPage();
       }, [month, year]);
 
     const saveTask = (item) => {
-        const data = getData();
         if (item.id == null)
         {
-            item.id = data.length + 1;
+            item.id = tasks.length + 1;
         }
-        data[item.id - 1] = item;
-        setCookie('trelloData', data);
-        cookies.data = data;
-        refreshPage();
-        console.log(cookies.data);
+        tasks[item.id - 1] = item;
+
+        fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(tasks),
+            })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log('Data received:', data);
+              refreshPage();
+            })
+            .catch((error) => {
+              console.error('Error fetching data:', error);
+            });
     }
 
     const onDrop = (item, monitor, status, day) => {

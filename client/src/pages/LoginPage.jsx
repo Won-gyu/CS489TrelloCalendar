@@ -3,19 +3,41 @@ import { useHistory } from "react-router-dom";
 //import "../style/auth.css";
 
 
-const LoginPage = ({ users, setUser }) => {
+const LoginPage = ({ setUser }) => {
+    const apiUrl = 'http://localhost:3000/login';
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
 
     const handleLogin = () => {
-        const user = users.find(user => user.email === email && user.password === password);
-        if (user) {
-            setUser(user);
-            history.push("/manage");
-        } else {
-            alert("Invalid email or password");
-        }
+        fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            })
+            .then((response) => {
+                // Check if the request was successful.
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((user) => {
+                console.log(user);
+                if (user) {
+                    setUser(user);
+                    history.push("/manage");
+                } else {
+                    console.error('Error fetching data:', error);
+                }
+            })
+            .catch((error) => {
+                alert("Email does not exist");
+                console.error('Error fetching data:', error);
+            });
     };
 
     return (
