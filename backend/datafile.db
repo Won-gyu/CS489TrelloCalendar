@@ -1,0 +1,10 @@
+{"data":[{"email":"test@wsu.edu","password":"1234"}],"_id":"DBR9QhfUOTw7Wlyi"}
+{"name":"task","data":[{"email":"test@wsu.edu","title":"1","content":"1","date":"2023-04-01T07:00:00.000Z","statusIdx":0,"id":1}],"_id":"dMCjW7pXnT2w91LH"}
+{"name":"user","data":[{"email":"test@wsu.edu","password":"1234"},{"email":"test@wsu.edu1","password":"1234"}],"_id":"f9i1zyCeMD9T0Hfb"}
+{"$$indexCreated":{"fieldName":"name","unique":true,"sparse":false}}
+{"name":"task","data":[{"email":"test@wsu.edu","title":"1","content":"1","date":"2023-04-01T07:00:00.000Z","statusIdx":0,"id":1}],"_id":"dMCjW7pXnT2w91LH"}
+{"name":"task","data":[{"email":"test@wsu.edu","title":"1","content":"1","date":"2023-04-03T07:00:00.000Z","statusIdx":0,"id":1,"index":0}],"_id":"dMCjW7pXnT2w91LH"}
+{"name":"task","data":[{"email":"test@wsu.edu","title":"1","content":"1","date":"2023-04-03T07:00:00.000Z","statusIdx":0,"id":1,"index":0}],"_id":"dMCjW7pXnT2w91LH"}
+{"name":"task","data":[{"email":"test@wsu.edu","title":"1","content":"1","date":"2023-04-05T07:00:00.000Z","statusIdx":0,"id":1,"index":0}],"_id":"dMCjW7pXnT2w91LH"}
+{"name":"task","data":[{"email":"test@wsu.edu","title":"1","content":"1","date":"2023-04-05T07:00:00.000Z","statusIdx":0,"id":1,"index":0}],"_id":"dMCjW7pXnT2w91LH"}
+{"name":"task","data":[{"email":"test@wsu.edu","title":"1","content":"1","date":"2023-04-05T07:00:00.000Z","statusIdx":0,"id":1,"index":0}],"_id":"dMCjW7pXnT2w91LH"}

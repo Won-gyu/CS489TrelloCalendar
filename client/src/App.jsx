@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Homepage from './pages/Homepage';
 import Header from './components/Header';
 import LoginPage from './pages/LoginPage';
@@ -11,21 +11,56 @@ import {
     Route,
     Redirect
 } from "react-router-dom";
-import { useCookies } from 'react-cookie';
 import ProjectManager from './pages/ProjectManager';
 
 const App = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['trelloUserData']);
     const [user, setUser] = useState(null);
+    const [users, setUsers] = useState([]);
+    const apiUrl = 'http://localhost:3000/user';
 
-    const setUsers = (users) => {
-        setCookie('trelloUserData', users);
+    const refreshUsers = () => {
+        fetch(apiUrl)
+            .then((response) => {
+                // Check if the request was successful.
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((users) => {
+                console.log(users);
+                setUsers(users);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     }
 
-    const getUsers = () => {
-        return cookies.trelloUserData || [];
+    useEffect(() => {
+        refreshUsers();
+      }, []);
+
+    const saveUsers = (users) => {
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(users),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((users) => {
+            setUsers(users);
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+        });
     }
-    const users = getUsers();
 
     return (
         <BrowserRouter>
@@ -33,13 +68,13 @@ const App = () => {
                 <Header user={user} setUser={setUser} />
                 <Switch>
                     <Route path="/login">
-                        <LoginPage users={users} setUser={setUser} />
+                        <LoginPage setUser={setUser} />
                     </Route>
                     <Route path="/manage">
                         <ProjectManager />
                     </Route>
                     <Route path="/register">
-                        <RegisterPage users={users} setUsers={setUsers} />
+                        <RegisterPage users={users} setUsers={saveUsers} />
                     </Route>
                     {user ?
                         <Route path="/:year?/:month?" history={history}>
